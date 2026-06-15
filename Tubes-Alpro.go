@@ -77,6 +77,7 @@ func ubahMahasiswa(M *arrMahasiswa, n int) {
 	fmt.Print("Masukkan NIM mahasiswa yang ingin diubah datanya: ")
 	fmt.Scan(&nim)
 
+	// ubah data mahasiswa: sequential search
 	for i := 0; i < n; i++ {
 		if M[i].nim == nim {
 			found = true
@@ -127,6 +128,7 @@ func hapusMahasiswa(M *arrMahasiswa, n *int) {
 	fmt.Print("Masukkan NIM mahasiswa yang ingin dihapus datanya: ")
 	fmt.Scan(&nim)
 
+	// hapus data mahasiswa: sequential search, geser array
 	for i := 0; i < *n; i++ {
 		if M[i].nim == nim {
 			for j := i; j < *n-1; j++ {
@@ -155,6 +157,7 @@ func catatTransaksi(M *arrMahasiswa, n int, K *kas) {
 	fmt.Print("Masukkan NIM mahasiswa: ")
 	fmt.Scan(&nim)
 
+	// catat transaksi: sequential search
 	for i := 0; i < n; i++ {
 		if M[i].nim == nim {
 			fmt.Print("Masukkan jumlah pembayaran: Rp. ")
@@ -169,12 +172,15 @@ func catatTransaksi(M *arrMahasiswa, n int, K *kas) {
 			fmt.Print("Masukkan tahun pembayaran: ")
 			fmt.Scan(&M[i].tahunPembayaran)
 
+			// update total iuran
 			M[i].totalIuran = M[i].totalIuran + pembayaran
 			K.saldo = K.saldo + pembayaran
 
+			// update tunggakan
 			M[i].totalTunggakan = M[i].nominalIuran - M[i].totalIuran
 			M[i].statusPembayaran = "Belum Lunas"
 
+			// update status pembayaran jika sudah lunas
 			if M[i].totalIuran >= M[i].nominalIuran && M[i].statusPembayaran != "Lunas" {
 				M[i].statusPembayaran = "Lunas"
 				K.jumlahLunas++
@@ -213,6 +219,7 @@ func cariBelumBayar(M *arrMahasiswa, n int) {
 		fmt.Println("\nDaftar mahasiswa yang belum lunas:")
 		fmt.Println("Nama         NIM             Total Tunggakan")
 		fmt.Println("--------------------------------------------")
+		// tampilkan mahasiswa yang belum lunas: sequential search
 		for i := 0; i < n; i++ {
 			if M[i].statusPembayaran != "Lunas" {
 				fmt.Printf("%-12s %-15s Rp. %-10d\n", M[i].nama, M[i].nim, M[i].totalTunggakan)
@@ -225,6 +232,7 @@ func cariBelumBayar(M *arrMahasiswa, n int) {
 		}
 
 	case 2:
+		// urutkan data mahasiswa berdasarkan NIM: selection sort
 		for pass = 1; pass < n; pass++ {
 			idx = pass - 1
 
@@ -242,6 +250,7 @@ func cariBelumBayar(M *arrMahasiswa, n int) {
 		fmt.Print("Masukkan NIM mahasiswa: ")
 		fmt.Scan(&nim)
 
+		// cari mahasiswa berdasarkan NIM: binary search
 		left = 0
 		right = n - 1
 		found = false
@@ -282,6 +291,7 @@ func insertionSortNamaAscending(M *arrMahasiswa, n int) {
 	var pass, i int
 	var temp mahasiswa
 
+	// urutkan data mahasiswa berdasarkan nama (ascending): insertion sort
 	for pass = 1; pass < n; pass++ {
 		temp = M[pass]
 		i = pass
@@ -299,6 +309,7 @@ func insertionSortNamaDescending(M *arrMahasiswa, n int) {
 	var pass, i int
 	var temp mahasiswa
 
+	// urutkan data mahasiswa berdasarkan nama (descending): insertion sort
 	for pass = 1; pass < n; pass++ {
 		temp = M[pass]
 		i = pass
@@ -316,6 +327,7 @@ func sortTunggakanAscending(M *arrMahasiswa, n int) {
 	var pass, j, idx int
 	var temp mahasiswa
 
+	// urutkan data mahasiswa berdasarkan tunggakan (ascending): selection sort
 	for pass = 1; pass < n; pass++ {
 		idx = pass - 1
 		for j = pass - 1; j < n; j++ {
@@ -335,6 +347,7 @@ func sortTunggakanDescending(M *arrMahasiswa, n int) {
 	var pass, j, idx int
 	var temp mahasiswa
 
+	// urutkan data mahasiswa berdasarkan tunggakan (descending): selection sort
 	for pass = 1; pass < n; pass++ {
 		idx = pass - 1
 		for j = pass - 1; j < n; j++ {
