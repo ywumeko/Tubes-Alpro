@@ -40,30 +40,36 @@ func pilihMenu() {
 
 func tambahMahasiswa(M *arrMahasiswa, jumlahMahasiswa *int) {
 	var n int
-
 	fmt.Print("Jumlah mahasiswa yang ingin ditambahkan: ")
-	fmt.Scan(jumlahMahasiswa)
+	fmt.Scan(&n)
 
-	if *jumlahMahasiswa >= 1 && *jumlahMahasiswa <= 100 {
-		for i := 0; i < *jumlahMahasiswa; i++ {
-			fmt.Print("Masukkan nama mahasiswa (Untuk spasi gunakan underscore): ")
-			fmt.Scan(&M[i].nama)
+	if n >= 1 && *jumlahMahasiswa+n <= 100 {
+
+		jumlahLama := *jumlahMahasiswa
+
+		*jumlahMahasiswa += n
+
+		for i := 0; i < n; i++ {
+			idx := jumlahLama + i
+			fmt.Print("Masukkan nama mahasiswa (Gunakan underscore untuk spasi): ")
+			fmt.Scan(&M[idx].nama)
 
 			fmt.Print("Masukkan NIM mahasiswa: ")
-			fmt.Scan(&M[i].nim)
+			fmt.Scan(&M[idx].nim)
 
 			fmt.Print("Masukkan nominal iuran: Rp. ")
-			fmt.Scan(&M[i].nominalIuran)
-			M[i].tanggalPembayaran = "-"
-			M[i].bulanPembayaran = " "
-			M[i].tahunPembayaran = " "
-			M[i].statusPembayaran = "Belum Lunas"
-			M[i].totalTunggakan = M[i].nominalIuran - M[i].totalIuran
+			fmt.Scan(&M[idx].nominalIuran)
 			fmt.Println()
+
+			M[idx].tanggalPembayaran = "-"
+			M[idx].bulanPembayaran = " "
+			M[idx].tahunPembayaran = " "
+			M[idx].statusPembayaran = "Belum Lunas"
+			M[idx].totalIuran = 0
+			M[idx].totalTunggakan = M[idx].nominalIuran
 		}
-		fmt.Println("Data berhasil ditambahkan.")
-		n = *jumlahMahasiswa
-		tampilkanData(M, n)
+		fmt.Println("\nData berhasil ditambahkan.")
+		tampilkanData(M, *jumlahMahasiswa)
 	} else {
 		fmt.Println("Jumlah mahasiswa harus antara 1 dan 100.")
 	}
